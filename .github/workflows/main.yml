@@ -8,9 +8,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-
       - name: Set up Docker
         uses: docker/setup-buildx-action@v3
 
@@ -30,8 +27,9 @@ jobs:
             --restart unless-stopped \
             lscr.io/linuxserver/chromium:latest
 
-      - name: Keep alive for 5 hours
-        run: sleep 18000
-
       - name: Show running containers
         run: docker ps
+        
+      - name: Keep alive for 5 hours
+        run: sleep 18000
+            
