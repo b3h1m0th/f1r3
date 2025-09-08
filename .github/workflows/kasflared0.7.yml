@@ -1,4 +1,4 @@
-name: kasflared0.6
+name: kasflared0.7
 
 on:
   workflow_dispatch:
@@ -13,7 +13,6 @@ jobs:
           docker run -d \
             --name=f1r3Flared \
             -p 4901:4901 \
-            -v /docker/appdata/:/config:rw \
             kasmweb/chromium:1.17.0
            
       - name: Show running containers
