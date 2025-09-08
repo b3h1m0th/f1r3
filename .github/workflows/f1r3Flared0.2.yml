@@ -1,0 +1,33 @@
+name: f1r3Flared0.2
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-chromium:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run f1r3Flared container
+        run: |
+          docker run -d \
+            --name=chromium \
+            --name=firefox \
+            -p 5800:5800 \
+            -v /docker/appdata/firefox:/config:rw \
+            jlesage/firefox
+            
+      - name: Show running containers
+        run: docker ps
+        
+      - name: Run f1r3Flared
+        run: |
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
+          cloudflared --version
+          cloudflared tunnel --url http://localhost:5800
+
+      - name: Keep alive for 5 hours
+        run: sleep 18000
+          
