@@ -1,27 +1,37 @@
-name: Docker Firefox Test
+name: Run Chromium Docker Container
 
 on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
+  workflow_dispatch:
 
 jobs:
-  docker-firefox:
+  run-chromium:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout repository
+      - name: Checkout repo
         uses: actions/checkout@v4
 
-      - name: Run Firefox in Docker
-        run: |
-          docker run --rm \
-            --name firefox \
-            -e DISPLAY=:99 \
-            -v /tmp/.X11-unix:/tmp/.X11-unix \
-            selenium/standalone-firefox:latest \
-            firefox --version
+      - name: Set up Docker
+        uses: docker/setup-buildx-action@v3
 
-      # Optionally, run your tests here using the Firefox container
+      - name: Run Chromium container
+        run: |
+          docker run -d \
+            --name=chromium \
+            --security-opt seccomp=unconfined \
+            -e PUID=1000 \
+            -e PGID=1000 \
+            -e TZ=Etc/UTC \
+            -e CHROME_CLI=https://www.linuxserver.io/ \
+            -p 3000:3000 \
+            -p 3001:3001 \
+            -v /path/to/chromium/config:/config \
+            --shm-size="1gb" \
+            --restart unless-stopped \
+            lscr.io/linuxserver/chromium:latest
+
+      - name: Keep alive for 5 hours
+        run: sleep 18000
+
+      - name: Show running containers
+        run: docker ps
