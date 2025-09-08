@@ -1,1 +1,27 @@
-h
+name: Docker Firefox Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  docker-firefox:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Run Firefox in Docker
+        run: |
+          docker run --rm \
+            --name firefox \
+            -e DISPLAY=:99 \
+            -v /tmp/.X11-unix:/tmp/.X11-unix \
+            selenium/standalone-firefox:latest \
+            firefox --version
+
+      # Optionally, run your tests here using the Firefox container
