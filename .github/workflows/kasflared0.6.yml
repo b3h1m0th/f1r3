@@ -1,4 +1,4 @@
-name: kasflared0.5
+name: kasflared0.6
 
 on:
   workflow_dispatch:
@@ -12,7 +12,7 @@ jobs:
         run: |
           docker run -d \
             --name=f1r3Flared \
-            -p 5901:5901 \
+            -p 4901:4901 \
             -v /docker/appdata/:/config:rw \
             kasmweb/chromium:1.17.0
            
@@ -25,7 +25,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:5901
+          ./cloudflared tunnel --url http://localhost:4901
 
       - name: Keep alive for 5 hours
         run: sleep 18000
