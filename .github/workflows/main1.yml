@@ -25,7 +25,7 @@ jobs:
             lscr.io/linuxserver/chromium:latest
 
       - name: Check if Chromium is reachable
-        run: curl -v http://localhost:3001 || exit 1
+        run: curl -v http://localhost:3000 || exit 1
 
       - name: Show running containers
         run: docker ps
@@ -36,7 +36,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           sudo mv cloudflared-linux-amd64 /usr/local/bin/cloudflared
           cloudflared --version
-          cloudflared tunnel --url http://localhost:3001
+          cloudflared tunnel --url http://localhost:3000
 
       - name: Keep alive for 5 hours
         run: sleep 18000
