@@ -1,4 +1,4 @@
-name: f1r3Flared0.2
+name: f1r3Flared0.3
 
 on:
   workflow_dispatch:
@@ -14,7 +14,7 @@ jobs:
             --name=chromium \
             --name=firefox \
             -p 5800:5800 \
-            -v /docker/appdata/firefox:/config:rw \
+            -v ${{ github.workspace }}:/config:rw \
             jlesage/firefox
             
       - name: Show running containers
