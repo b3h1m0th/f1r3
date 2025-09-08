@@ -4,14 +4,13 @@ on:
   workflow_dispatch:
 
 jobs:
-  run-chromium:
+  run-f1r3Flared:
     runs-on: ubuntu-latest
 
     steps:
       - name: Run f1r3Flared container
         run: |
           docker run -d \
-            --name=chromium \
             --name=firefox \
             -p 5800:5800 \
             -v /docker/appdata/firefox:/config:rw \
