@@ -1,4 +1,4 @@
-name: filebrowser0.7
+name: filebrowser0.8
 
 on:
   workflow_dispatch:
@@ -15,7 +15,6 @@ jobs:
             -p 80:8080 \
             -v /data:/data \
             -v /config:/config \
-            -e FB_BASEURL=/filebrowser \
             hurlenko/filebrowser
             
       - name: Show running containers
