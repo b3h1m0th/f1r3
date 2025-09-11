@@ -1,4 +1,4 @@
-name: filebrowser0.11
+name: filebrowser0.12
 
 on:
   workflow_dispatch:
@@ -10,9 +10,12 @@ jobs:
     steps:
       - name: Run filebrowser container
         run: |
-          git clone https://github.com/hanxi/media-server-docker-compose.git
-          cd media-server-docker-compose
-          docker-compose up -d
+          docker run -d \
+            --name=filebrowser \
+            -p 8081:80 \
+            -v /data:/srv \
+            -v /database:/database.db \
+            filebrowser/filebrowser
             
       - name: Show running containers
         run: docker ps
@@ -23,8 +26,8 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:8000
+          ./cloudflared tunnel --url http://localhost:8081
 
       - name: Keep alive for 5 hours
         run: sleep 18000
-          
+         
