@@ -1,4 +1,4 @@
-name: filebrowser0.9
+name: filebrowser0.10
 
 on:
   workflow_dispatch:
@@ -12,11 +12,9 @@ jobs:
         run: |
           docker run -d \
             --name=filebrowser \
-            --user $(id -u):$(id -g) \
             -p 80:8080 \
             -v /data:/data \
             -v /config:/config \
-            -e FB_BASEURL=/filebrowser \
             hurlenko/filebrowser
             
       - name: Show running containers
