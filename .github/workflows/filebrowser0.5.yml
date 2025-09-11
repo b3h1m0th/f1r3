@@ -1,4 +1,4 @@
-name: filebrowser0.4
+name: filebrowser0.5
 
 on:
   workflow_dispatch:
@@ -14,8 +14,8 @@ jobs:
             --name=filebrowser \
             --user $(id -u):$(id -g) \
             -p 80:8080 \
-            -v /DATA_DIR:/data \
-            -v /CONFIG_DIR:/config \
+            -v /DATA:/data \
+            -v /CONFIG:/config \
             -e FB_BASEURL=/filebrowser \
             hurlenko/filebrowser
             
@@ -28,7 +28,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:8080
+          ./cloudflared tunnel --url http://localhost:80
 
       - name: Keep alive for 5 hours
         run: sleep 18000
