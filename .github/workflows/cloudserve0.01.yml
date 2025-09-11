@@ -1,0 +1,31 @@
+name: cloudreve0.01
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-cloudreve:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run cloudreve container
+        run: |
+          wget https://github.com/cloudreve/cloudreve/releases/download/4.7.0/cloudreve_4.7.0_linux_amd64.tar.gz
+          tar -zxvf cloudreve_4.7.0_linux_amd64.tar.gz
+          chmod +x ./cloudreve
+          ./cloudreve
+          
+      - name: Show running containers
+        run: docker ps
+        
+      - name: Run f113Flared
+        run: |
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          mv cloudflared-linux-amd64 cloudflared
+          ./cloudflared --version
+          ./cloudflared tunnel --url http://localhost:5212
+
+      - name: Keep alive for 5 hours
+        run: sleep 18000
+        
