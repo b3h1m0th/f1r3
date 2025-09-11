@@ -23,7 +23,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:80
+          ./cloudflared tunnel --url http://localhost:8000
 
       - name: Keep alive for 5 hours
         run: sleep 18000
