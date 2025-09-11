@@ -1,4 +1,4 @@
-name: filebrowser0.6
+name: filebrowser0.7
 
 on:
   workflow_dispatch:
@@ -12,7 +12,6 @@ jobs:
         run: |
           docker run -d \
             --name=filebrowser \
-            --user $(id -u):$(id -g) \
             -p 80:8080 \
             -v /data:/data \
             -v /config:/config \
@@ -32,4 +31,4 @@ jobs:
 
       - name: Keep alive for 5 hours
         run: sleep 18000
-        
+          
