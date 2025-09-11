@@ -15,9 +15,9 @@ jobs:
             -p 80:8080 \
             --user $(id -u):$(id -g) \
             -p 8080:8080 \
-  	        -v /DATA_DIR:/data \
- 		        -v /CONFIG_DIR:/config \
- 		        -e FB_BASEURL=/filebrowser \
+            -v /DATA_DIR:/data \
+            -v /CONFIG_DIR:/config \
+            -e FB_BASEURL=/filebrowser \
             hurlenko/filebrowser
             
       - name: Show running containers
