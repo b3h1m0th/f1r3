@@ -1,4 +1,4 @@
-name: filebrowser0.10
+name: filebrowser0.11
 
 on:
   workflow_dispatch:
@@ -10,12 +10,9 @@ jobs:
     steps:
       - name: Run filebrowser container
         run: |
-          docker run -d \
-            --name=filebrowser \
-            -p 80:8080 \
-            -v /data:/data \
-            -v /config:/config \
-            hurlenko/filebrowser
+          git clone https://github.com/hanxi/media-server-docker-compose.git
+          cd media-server-docker-compose
+          docker-compose up -d
             
       - name: Show running containers
         run: docker ps
