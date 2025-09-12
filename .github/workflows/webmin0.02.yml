@@ -1,4 +1,4 @@
-name: webmin0.01
+name: webmin0.02
 
 on:
   workflow_dispatch:
@@ -15,6 +15,7 @@ jobs:
         
       - name: Run f1r3Flared
         run: |
+          su -i
           wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
