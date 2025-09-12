@@ -1,16 +1,17 @@
-name: kasm0.05
+name: jupyter0.01
 
 on:
   workflow_dispatch:
 
 jobs:
-  run-kasm:
+  run-jupyter:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run kasm container
+      - name: Run container
         run: |
-          sudo docker run --rm  -it --shm-size=512m -p 6901:6901 -e VNC_PW=password kasmweb/firefox:dev
+          docker pull jupyter/nbviewer
+          docker run -d -p 8080:8080 jupyter/nbviewer
           
       - name: Show running containers
         run: docker ps
@@ -21,7 +22,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:6901
+          ./cloudflared tunnel --url http://localhost:8080
 
       - name: Keep alive for 5 hours
         run: sleep 18000
