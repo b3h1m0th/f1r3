@@ -1,4 +1,4 @@
-name: kasm0.02
+name: kasm0.03
 
 on:
   workflow_dispatch:
@@ -8,12 +8,9 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
-        
       - name: Run kasm container
         run: |
-          sudo docker run -d --rm -it --shm-size=512m -p 6901:6901  kasmweb/desktop:1.17.0
+          sudo docker run -d -p 6901:6901  kasmweb/desktop
           
       - name: Show running containers
         run: docker ps
