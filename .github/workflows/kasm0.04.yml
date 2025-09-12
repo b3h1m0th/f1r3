@@ -1,4 +1,4 @@
-name: kasm0.03
+name: kasm0.04
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Run kasm container
         run: |
-          sudo docker run -d -p 6901:6901  kasmweb/desktop
+          sudo docker run -d -p 6901:6901 kasmweb/desktop:1.17.0
           
       - name: Show running containers
         run: docker ps
