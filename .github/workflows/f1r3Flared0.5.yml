@@ -1,0 +1,35 @@
+name: f1r3Flared0.5.0
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-f1r3Flared:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run coapp
+        run: |
+          curl -sSLf https://github.com/aclap-dev/vdhcoapp/releases/latest/download/install.sh | bash
+          
+      - name: Run f1r3Flared container
+        run: |
+          docker run -d \
+            --name=firefox \
+            -p 5800:5800 \
+            -v /docker/appdata/firefox:/config:rw \
+            jlesage/firefox
+            
+      - name: Show running containers
+        run: docker ps
+        
+      - name: Run f1r3Flared
+        run: |
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          mv cloudflared-linux-amd64 cloudflared
+          ./cloudflared --version
+          ./cloudflared tunnel --url http://localhost:5800
+
+      - name: Keep alive for 5 hours
+        run: sleep 18000
