@@ -1,4 +1,4 @@
-name: kasm0.04
+name: kasm0.05
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Run kasm container
         run: |
-          sudo docker run -d -p 6901:6901 kasmweb/desktop:1.17.0
+          sudo docker run --rm  -it --shm-size=512m -p 6901:6901 -e VNC_PW=password kasmweb/firefox:dev
           
       - name: Show running containers
         run: docker ps
