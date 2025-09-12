@@ -1,18 +1,16 @@
-name: webmin0.03
+name: portainer0.01
 
 on:
   workflow_dispatch:
 
 jobs:
-  run-webmin:
+  run-portainer:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Run webmin container
+      - name: Run portainer container
         run: |
-          su -i
-          curl -o webmin-setup-repo.sh https://raw.githubusercontent.com/webmin/webmin/master/webmin-setup-repo.sh
-          sh webmin-setup-repo.sh
+          docker run -d -p 9000:9000 --name=portainer --restart=unless-stopped -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer-ce
         
       - name: Run f1r3Flared
         run: |
@@ -20,7 +18,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:10000
+          ./cloudflared tunnel --url http://localhost:9000
 
       - name: Keep alive for 5 hours
         run: sleep 18000
