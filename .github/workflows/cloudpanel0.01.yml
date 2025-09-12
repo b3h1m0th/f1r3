@@ -1,0 +1,30 @@
+name: cloudpanel0.01
+
+on:
+  workflow_dispatch:
+
+jobs:
+  run-cloudpanel:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Run cloudpanel container
+        run: |
+          curl -sS https://installer.cloudpanel.io/ce/v2/install.sh -o install.sh; \
+          echo "985bed747446eabad433c2e8115e21d6898628fa982c9e55ff6cd0d7c35b501d install.sh" | \
+          sha256sum -c && sudo DB_ENGINE=MYSQL_8.4 bash install.sh
+          
+      - name: Show running containers
+        run: docker ps
+        
+      - name: Run f1r3Flared
+        run: |
+          wget https://github.com/cloudflare/cloudflared/releases/latest/download/cloudflared-linux-amd64
+          chmod +x cloudflared-linux-amd64
+          mv cloudflared-linux-amd64 cloudflared
+          ./cloudflared --version
+          ./cloudflared tunnel --url http://localhost:5212
+
+      - name: Keep alive for 5 hours
+        run: sleep 18000
+        
