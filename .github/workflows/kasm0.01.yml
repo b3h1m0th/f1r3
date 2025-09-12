@@ -1,21 +1,20 @@
-name: webmin0.04
+name: kasm0.01
+
 
 on:
   workflow_dispatch:
 
+
 jobs:
-  run-webmin:
+  run-kasm:
     runs-on: ubuntu-latest
 
+
     steps:
-      - name: Run webmin container
+      - name: Run kasm container
         run: |
-          mkdir data
-          docker run --name bind -d --restart=always \
-            -p 53:53/tcp --publish 53:53/udp --publish 10000:10000/tcp \
-            --v "$(pwd)/data:/data" \
-            windoac/bind:latest
-        
+          sudo docker run -d --rm -it --shm-size=512m -p 6901:6901 -e VNC_PW=password kasmweb/desktop:1.17.0
+          
       - name: Show running containers
         run: docker ps
         
@@ -25,8 +24,8 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:10000
+          ./cloudflared tunnel --url http://localhost:6901
+
 
       - name: Keep alive for 5 hours
         run: sleep 18000
-          
