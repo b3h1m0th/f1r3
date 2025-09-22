@@ -40,8 +40,3 @@ jobs:
       - name: Start Cloudflare Tunnel
         run: ./cloudflared tunnel --url $TUNNEL_URL
 
-      # Optionally clean up containers and binaries after completion
-      - name: Cleanup
-        run: |
-          docker rm -f $(docker ps -aq --filter ancestor=sickcodes/docker-osx:v8.5.2) || true
-          rm -f cloudflared
