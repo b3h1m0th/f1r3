@@ -1,4 +1,4 @@
-name: m4k 0.0.1
+name: m4k 0.0.2
 
 on:
   workflow_dispatch:
@@ -10,7 +10,7 @@ jobs:
     steps:
       - name: Run container
         run: |
-          docker run -d -p \
+          docker run -d \
           --device=/dev/kvm \
           -p 50922:10022 \
           -v /tmp/.X11-unix:/tmp/.X11-unix \
