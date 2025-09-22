@@ -1,4 +1,4 @@
-name: jupyter0.02
+name: m4k 0.0.1
 
 on:
   workflow_dispatch:
@@ -10,7 +10,15 @@ jobs:
     steps:
       - name: Run container
         run: |
-          docker run -d -p 10000:8888 quay.io/jupyter/scipy-notebook:2025-03-14
+          docker run -d -p \
+          --device=/dev/kvm \
+          -p 50922:10022 \
+          -v /tmp/.X11-unix:/tmp/.X11-unix \
+          -e "DISPLAY=${DISPLAY:-:0.0}" \
+          -e SHORTNAME=catalina \
+          sickcodes/docker-osx:latest
+
+# docker build -t docker-osx .
           
       - name: Show running containers
         run: docker ps
@@ -21,7 +29,7 @@ jobs:
           chmod +x cloudflared-linux-amd64
           mv cloudflared-linux-amd64 cloudflared
           ./cloudflared --version
-          ./cloudflared tunnel --url http://localhost:1000
+          ./cloudflared tunnel --url http://localhost:50922
 
       - name: Keep alive for 5 hours
         run: sleep 18000
