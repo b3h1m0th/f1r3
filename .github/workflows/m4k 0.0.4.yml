@@ -1,4 +1,4 @@
-name: m4k 0.0.3
+name: m4k 0.0.4
 
 on:
   workflow_dispatch:
@@ -9,7 +9,7 @@ jobs:
     timeout-minutes: 300  # 5 hours
 
     env:
-      DISPLAY: "${{ env.DISPLAY || ':0.0' }}"
+      DISPLAY: ${{ env.DISPLAY }}
       SHORTNAME: catalina
       VM_PORT: 50922
       TUNNEL_URL: "http://localhost:50922"
