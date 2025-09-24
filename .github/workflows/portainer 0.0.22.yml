@@ -1,4 +1,4 @@
-name: portainer0.02
+name: portainer 0.0.22
 
 on:
   workflow_dispatch:
@@ -10,9 +10,7 @@ jobs:
     steps:
       - name: Run portainer container
         run: |
-          docker run -d -p 9000:9000 --name=portainer --restart=unless-stopped -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer-ce
-          docker run -d -p 10000:10000 -e WEBMIN_PASS=Q1w2e3r4t5y6u7i8 coderitter/webmin:latest
-
+          docker run -d -p 9000:9000 --name=portainer --restart=unless-stopped -v /var/run/docker.sock:/var/run/docker.sock portainer/portainer-ce   
         
       - name: Run f1r3Flared
         run: |
